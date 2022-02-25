@@ -88,6 +88,8 @@ capture_duration = 16
 
 motionFound = 0
 
+
+
 try:
     while True:
         frames = pipeline.wait_for_frames()
