@@ -139,8 +139,10 @@ try:
         if motionFound == 1:
             #
             detections = detector.detect(prev_color_image)
-            if detections[0][1][0][0]=="person":
-                motionFound = funcCapture(pipeline, contours)
+            for i in range(len(detections)):
+                if detections[i][1][0][0]=="person":
+                    print("Person detected")
+                    motionFound = funcCapture(pipeline, contours)
 
         cv2.drawContours(prev_color_image, contours, -1, (0, 255, 0), 2)
 
