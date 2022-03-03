@@ -1,15 +1,11 @@
-import argparse
-import sys
 import time
 import cv2
 from object_detector import ObjectDetector
 from object_detector import ObjectDetectorOptions
-import utils
 import pyrealsense2 as rs
 import numpy as np
 from datetime import datetime
-
-
+import Senders
 
 def funcCapture(pipeline,contours):
     capture_duration = 8
@@ -43,8 +39,10 @@ def funcCapture(pipeline,contours):
         # if np.shape(frame) != ():
             # frame = cv2.flip(frame,0)
 
-        if counter in [100,150]:
-            points.export_to_ply(f'./Data/save_{date}_{counter}.ply', mapped_frame)
+        if counter in [100]:
+            str_save = f'./Data/save_{date}_{counter}.ply'
+            points.export_to_ply(str_save, mapped_frame)
+            sc.sendFile(str_save)
         counter += 1
 
         out.write(save_imgs)
@@ -94,13 +92,14 @@ capture_duration = 16
 
 motionFound = 0
 
-
 options = ObjectDetectorOptions(
       num_threads=4,
       score_threshold=0.3,
       max_results=3,
       enable_edgetpu=False)
 detector = ObjectDetector(model_path="ssd_mobilenet_v1_coco_quant_postprocess.tflite", options=options)
+
+sc = Senders()
 
 
 try:

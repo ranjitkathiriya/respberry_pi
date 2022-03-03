@@ -1,5 +1,6 @@
 {
     "status": "success",
     "message": "Device Registered",
-    "authKey": "9Rv4oTSSLPcOqTpVhxEJDw"
+    "authKey": "9Rv4oTSSLPcOqTpVhxEJDw",
+    "device_id": 4
 }

@@ -3,7 +3,8 @@ import numpy as np
 import cv2
 import time
 from datetime import datetime
-
+import open3d as o3d
+import os
 
 def funcCapture(pipeline,contours):
     capture_duration = 16
@@ -38,7 +39,11 @@ def funcCapture(pipeline,contours):
             # frame = cv2.flip(frame,0)
 
         if counter in [75,150,225,300]:
-            points.export_to_ply(f'./Data/save_{date}_{counter}.ply', mapped_frame)
+            date_f = date
+            points.export_to_ply(f'./Data/save_{date_f}_{counter}.ply', mapped_frame)
+            pcd = o3d.io.read_triangle_mesh(f"./Data/save_{date_f}_{counter}.ply")
+            o3d.io.write_triangle_mesh(f"./Data/save_{date_f}_{counter}.off", pcd)
+            os.remove(f"./Data/save_{date_f}_{counter}.ply")
         counter += 1
 
         out.write(save_imgs)
